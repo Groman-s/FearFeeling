@@ -1,0 +1,35 @@
+fear-settings:
+  light-level-border: 8
+  fear-increase-per-second: 0.8
+  fear-decrease-per-second: 3.0
+  default-show-style: BOSSBAR
+  consider-night-vision: true
+  critical-level:
+    border: 80.0
+    title:
+      line-1: "&4CRITICAL FEAR LEVEL!"
+      line-2: "FIND A LIGHTED SPACE"
+    effects:
+      - "WEAKNESS:1"
+      - "SLOW:2"
+    play-heartbeat-sounds: true
+    health-decrease-per-second-while-full: 10.0
+  fear-from-monsters:
+    damage-to-fear-percent: 50.0
+    increase-while-nearby:
+      radius: 5.0
+      fear-increase-per-second: 0.5
+
+actionbar-settings:
+  message: "&7Fear: &6%f%"
+
+bossbar-settings:
+  name: "Fear"
+  color: RED
+  enable-fog: true
+  enable-darken-sky: true
+
+# If you have any authorization plugins (to prevent fear grow before authorize). Players will move to get authorized.
+check-authorized: true
+
+worlds-blacklist: []
