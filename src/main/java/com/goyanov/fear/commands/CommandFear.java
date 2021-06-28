@@ -23,6 +23,12 @@ public class CommandFear implements CommandExecutor
         // fear change <value> [player]
         // fear showstyle <value> [player]
 
+        if (args.length == 0)
+        {
+            sender.sendMessage(MessagesManager.Fear.getWrongCmdArgument());
+            return true;
+        }
+
         // fear reload
         if (args.length == 1 && args[0].equalsIgnoreCase("reload"))
         {
