@@ -45,7 +45,7 @@ public class CommandFear implements CommandExecutor
             return true;
         }
 
-        if (args.length >= 1 && args.length <= 3)
+        if (args.length <= 3)
         {
             String param = args[0].toLowerCase();
 
