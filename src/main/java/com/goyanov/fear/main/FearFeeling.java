@@ -11,6 +11,7 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
+import java.sql.SQLException;
 
 public class FearFeeling extends JavaPlugin
 {
@@ -38,10 +39,15 @@ public class FearFeeling extends JavaPlugin
 
     public void unloadPlugin()
     {
-        for (ScaredPlayer sp : Fear.SCARED_PLAYERS.values())
+        try
         {
-            sp.remove();
-        }
+            SQLManager.getMainConnection().setAutoCommit(false);
+            for (ScaredPlayer sp : Fear.SCARED_PLAYERS.values())
+            {
+                sp.remove();
+            }
+            SQLManager.getMainConnection().commit();
+        } catch (SQLException throwables) { throwables.printStackTrace(); }
     }
 
     @Override

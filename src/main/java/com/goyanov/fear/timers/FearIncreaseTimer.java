@@ -84,7 +84,7 @@ public class FearIncreaseTimer extends BukkitRunnable
             delta = delta < -1 ? -1 : delta > 1 ? 1 : delta;
             sp.addCurrentFear(delta);
 
-            byte lightLevel = p.getLocation().getBlock().getLightLevel();
+            byte lightLevel = p.getEyeLocation().getBlock().getLightLevel();
 
             if (lightLevel >= PluginSettings.FearSettings.getLightLevelBorder() || (PluginSettings.FearSettings.getConsiderNightVision() && p.hasPotionEffect(PotionEffectType.NIGHT_VISION)))
             {

@@ -10,6 +10,10 @@ import java.sql.*;
 public class SQLManager
 {
     private static Connection mainConnection;
+    public static Connection getMainConnection()
+    {
+        return mainConnection;
+    }
 
     public static void openConnectionWithDB()
     {
