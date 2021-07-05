@@ -18,6 +18,7 @@ public class PluginSettings
         private static byte lightLevelBorder;
         private static double fearIncreasePerTick;
         private static double fearDecreasePerTick;
+        private static double permissionModifier;
         private static FearShowStyle defaultShowStyle;
         private static boolean considerNightVision;
 
@@ -40,6 +41,10 @@ public class PluginSettings
         public static double getFearDecreasePerTick()
         {
             return fearDecreasePerTick;
+        }
+        public static double getPermissionModifier()
+        {
+            return permissionModifier;
         }
 
         public static class CriticalLevel
@@ -147,6 +152,7 @@ public class PluginSettings
         FearSettings.lightLevelBorder = (byte) config.getInt("fear-settings.light-level-border");
         FearSettings.fearIncreasePerTick = config.getDouble("fear-settings.fear-increase-per-second")/20;
         FearSettings.fearDecreasePerTick = config.getDouble("fear-settings.fear-decrease-per-second")/20;
+        FearSettings.permissionModifier = config.getDouble("fear-settings.permission-modifier");
         String fearShowStyleName = config.getString("fear-settings.default-show-style").toUpperCase();
         try {
             FearSettings.defaultShowStyle = FearShowStyle.valueOf(fearShowStyleName);

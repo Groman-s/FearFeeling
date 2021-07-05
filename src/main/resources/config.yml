@@ -2,6 +2,7 @@ fear-settings:
   light-level-border: 8
   fear-increase-per-second: 0.8
   fear-decrease-per-second: 3.0
+  permission-modifier: 0.5
   default-show-style: BOSSBAR
   consider-night-vision: true
   critical-level:
