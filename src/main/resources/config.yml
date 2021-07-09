@@ -1,3 +1,4 @@
+# default-show-style - Fear show style for players who can't change their show style with the /fear showstyle command
 fear-settings:
   light-level-border: 8
   fear-increase-per-second: 0.8

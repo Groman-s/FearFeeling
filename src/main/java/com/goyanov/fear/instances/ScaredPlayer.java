@@ -41,7 +41,7 @@ public class ScaredPlayer
         finalFear = (double) datas[1];
         fearBlocked = (boolean) datas[2];
         fearDisabledByWorldBlackList = (boolean) datas[3];
-        fearShowStyle = (FearShowStyle) datas[4];
+        fearShowStyle = bukkitPlayer.hasPermission("FearFeeling.fear.showstyle") ? (FearShowStyle) datas[4] : PluginSettings.FearSettings.getDefaultShowStyle();
 
         if (currentFear >= PluginSettings.FearSettings.CriticalLevel.getBorder())
         {
