@@ -52,7 +52,7 @@ public class PluginSettings
             private static double border;
             private static List<PotionEffect> effects = new ArrayList<>();
             private static boolean playHeartbeatSounds;
-            private static double healthDecreasePerSecondWhileFull;
+            private static double healthDecreasePerTickWhileFull;
             private static String titleLine1;
             private static String titleLine2;
 
@@ -68,9 +68,9 @@ public class PluginSettings
             {
                 return playHeartbeatSounds;
             }
-            public static double getHealthDecreasePerSecondWhileFull()
+            public static double getHealthDecreasePerTickWhileFull()
             {
-                return healthDecreasePerSecondWhileFull;
+                return healthDecreasePerTickWhileFull;
             }
             public static String getTitleLine1()
             {
@@ -174,7 +174,7 @@ public class PluginSettings
             }
         }
         FearSettings.CriticalLevel.playHeartbeatSounds = config.getBoolean("fear-settings.critical-level.play-heartbeat-sounds");
-        FearSettings.CriticalLevel.healthDecreasePerSecondWhileFull = config.getDouble("fear-settings.critical-level.health-decrease-per-second-while-full")/20;
+        FearSettings.CriticalLevel.healthDecreasePerTickWhileFull = config.getDouble("fear-settings.critical-level.health-decrease-per-second-while-full")/20;
         FearSettings.CriticalLevel.titleLine1 = config.getString("fear-settings.critical-level.title.line-1").replace("&", "§");
         FearSettings.CriticalLevel.titleLine2 = config.getString("fear-settings.critical-level.title.line-2").replace("&", "§");
 
