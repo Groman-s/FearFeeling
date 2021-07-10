@@ -77,7 +77,11 @@ public class FearIncreaseTimer extends BukkitRunnable
             if (currentFear == 100)
             {
                 if (!p.isDead() && !p.isInvulnerable() && p.getGameMode() != GameMode.CREATIVE && p.getGameMode() != GameMode.SPECTATOR)
-                    p.setHealth(p.getHealth()-PluginSettings.FearSettings.CriticalLevel.getHealthDecreasePerSecondWhileFull() < 0 ? 0 : p.getHealth()-PluginSettings.FearSettings.CriticalLevel.getHealthDecreasePerSecondWhileFull());
+                {
+                    double newHealth = p.getHealth()-PluginSettings.FearSettings.CriticalLevel.getHealthDecreasePerSecondWhileFull();
+                    if (newHealth <= 0) newHealth = 0;
+                    p.setHealth(newHealth);
+                }
             }
 
             double delta = finalFear - currentFear;
