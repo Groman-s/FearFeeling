@@ -31,6 +31,16 @@ public class FearIncreaseTimer extends BukkitRunnable
     private boolean effectsGiven;
     private double fearChangeAmount;
 
+    private boolean checkOptifine(Player p)
+    {
+        if (!PluginSettings.getConsiderOptifine()) return false;
+
+        if (PluginSettings.GLOWING_ITEMS.contains(p.getInventory().getItemInMainHand().getType())) return true;
+        if (PluginSettings.GLOWING_ITEMS.contains(p.getInventory().getItemInOffHand().getType())) return true;
+
+        return false;
+    }
+
     @Override
     public void run()
     {
@@ -90,7 +100,7 @@ public class FearIncreaseTimer extends BukkitRunnable
 
             byte lightLevel = p.getEyeLocation().getBlock().getLightLevel();
 
-            if (lightLevel >= PluginSettings.FearSettings.getLightLevelBorder() || (PluginSettings.FearSettings.getConsiderNightVision() && p.hasPotionEffect(PotionEffectType.NIGHT_VISION)))
+            if (lightLevel >= PluginSettings.FearSettings.getLightLevelBorder() || checkOptifine(p) || (PluginSettings.FearSettings.getConsiderNightVision() && p.hasPotionEffect(PotionEffectType.NIGHT_VISION)))
             {
                 fearChangeAmount -= PluginSettings.FearSettings.getFearDecreasePerTick();
             }

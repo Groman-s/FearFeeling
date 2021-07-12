@@ -2,6 +2,7 @@ package com.goyanov.fear.utils;
 
 import com.goyanov.fear.main.FearFeeling;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.boss.BarColor;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -145,6 +146,13 @@ public class PluginSettings
         return actionBarMessage;
     }
 
+    private static boolean considerOptifine;
+    public static boolean getConsiderOptifine()
+    {
+        return considerOptifine;
+    }
+    public static final ArrayList<Material> GLOWING_ITEMS = new ArrayList<>();
+
     public static void reload()
     {
         FileConfiguration config = FearFeeling.inst().getConfig();
@@ -202,6 +210,17 @@ public class PluginSettings
             World w = Bukkit.getWorld(worldName);
             if (w != null) worldsBlacklist.add(w);
             else FearFeeling.inst().getLogger().warning("<<worlds-blacklist>> No world with name " + worldName + ". Skipping.");
+        }
+
+        considerOptifine = config.getBoolean("optifine.consider");
+        GLOWING_ITEMS.clear();
+        for (String line : config.getStringList("optifine.items"))
+        {
+            try {
+                GLOWING_ITEMS.add(Material.valueOf(line.toUpperCase()));
+            } catch (Exception e) {
+                FearFeeling.inst().getLogger().warning("<<optifine-items>> No Material with name " + line);
+            }
         }
 
         actionBarMessage = config.getString("actionbar-settings.message").replace("&", "§");

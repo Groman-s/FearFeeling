@@ -35,3 +35,34 @@ bossbar-settings:
 check-authorized: true
 
 worlds-blacklist: []
+
+# If you are sure than your players use Optifine (dynamic lights from items in hands)
+optifine:
+  consider: false
+  items:
+    - "TORCH"
+    - "SOUL_TORCH"
+    - "LANTERN"
+    - "SOUL_LANTERN"
+    - "GLOWSTONE"
+    - "JACK_O_LANTERN"
+    - "GLOW_ITEM_FRAME"
+    - "MAGMA_CREAM"
+    - "END_ROD"
+    - "REDSTONE_TORCH"
+    - "BLAZE_POWDER"
+    - "NETHER_STAR"
+    - "BLAZE_ROD"
+    - "CAMPFIRE"
+    - "SOUL_CAMPFIRE"
+    - "SHROOMLIGHT"
+    - "AMETHYST_CLUSTER"
+    - "ENDER_CHEST"
+    - "GLOW_INK_SAC"
+    - "PRISMARINE_CRYSTALS"
+    - "SEA_PICKLE"
+    - "GLOW_BERRIES"
+    - "CONDUIT"
+    - "SEA_LANTERN"
+    - "BEACON"
+    - "LAVA_BUCKET"
