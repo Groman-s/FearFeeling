@@ -36,7 +36,7 @@ check-authorized: true
 
 worlds-blacklist: []
 
-# If you are sure than your players use Optifine (dynamic lights from items in hands)
+# If you are sure that your players use Optifine (dynamic lights from items in hands)
 optifine:
   consider: false
   items:
