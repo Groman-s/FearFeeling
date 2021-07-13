@@ -19,6 +19,7 @@ public class ScaredPlayer
 
     private boolean fearBlocked = false;
     private boolean isLoggedIn = false;
+    private boolean diedOfFright = false;
 
     private double currentFear = 0;
     private double finalFear = 0;
@@ -211,6 +212,16 @@ public class ScaredPlayer
         return isLoggedIn;
     }
 
+    public boolean getDiedOfFright()
+    {
+        return diedOfFright;
+    }
+
+    public void setDiedOfFright(boolean diedOfFright)
+    {
+        this.diedOfFright = diedOfFright;
+    }
+
     public void setLoggedIn(boolean loggedIn)
     {
         isLoggedIn = loggedIn;
@@ -221,10 +232,7 @@ public class ScaredPlayer
         return fearDisabledByWorldBlackList;
     }
 
-    public void setFearDisabledByWorldBlackList(boolean fearDisabledByWorldBlackList)
-    {
-        this.fearDisabledByWorldBlackList = fearDisabledByWorldBlackList;
-    }
+    public void setFearDisabledByWorldBlackList(boolean fearDisabledByWorldBlackList) { this.fearDisabledByWorldBlackList = fearDisabledByWorldBlackList; }
 
     ///============================================================================================================================================
 }

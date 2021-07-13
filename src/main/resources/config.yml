@@ -16,6 +16,7 @@ fear-settings:
       - "SLOW:2"
     play-heartbeat-sounds: true
     health-decrease-per-second-while-full: 10.0
+    health-decrease-while-full-border: 0.0
   fear-from-monsters:
     damage-to-fear-percent: 50.0
     increase-while-nearby:
