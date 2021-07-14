@@ -78,6 +78,8 @@ public class FearFeeling extends JavaPlugin
         pm.registerEvents(new ModifyFear(), this);
         pm.registerEvents(new NoMilkWhileCritical(), this);
         pm.registerEvents(new WorldBlackList(), this);
+
+        new Metrics(this, 12053);
     }
 
     @Override
