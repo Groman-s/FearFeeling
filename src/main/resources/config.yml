@@ -27,7 +27,7 @@ actionbar-settings:
   message: "&7Fear: &6%f%"
 
 bossbar-settings:
-  name: "Fear"
+  name: "Fear: %f%"
   color: RED
   enable-fog: true
   enable-darken-sky: true
@@ -40,6 +40,7 @@ worlds-blacklist: []
 # If you are sure that your players use Optifine (dynamic lights from items in hands)
 optifine:
   consider: false
+  dropped-glowing-items-light-radius: 4.0
   items:
     - "TORCH"
     - "SOUL_TORCH"

@@ -156,6 +156,11 @@ public class PluginSettings
     {
         return considerOptifine;
     }
+    private static double droppedItemsLightRadius;
+    public static double getDroppedItemsLightRadius()
+    {
+        return droppedItemsLightRadius;
+    }
     public static final ArrayList<Material> GLOWING_ITEMS = new ArrayList<>();
 
     public static void reload()
@@ -219,6 +224,7 @@ public class PluginSettings
         }
 
         considerOptifine = config.getBoolean("optifine.consider");
+        droppedItemsLightRadius = config.getDouble("optifine.dropped-glowing-items-light-radius");
         GLOWING_ITEMS.clear();
         for (String line : config.getStringList("optifine.items"))
         {

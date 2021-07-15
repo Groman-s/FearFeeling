@@ -9,10 +9,13 @@ import net.md_5.bungee.api.chat.ComponentBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Monster;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.Optional;
 
 public class FearIncreaseTimer extends BukkitRunnable
 {
@@ -37,6 +40,10 @@ public class FearIncreaseTimer extends BukkitRunnable
 
         if (PluginSettings.GLOWING_ITEMS.contains(p.getInventory().getItemInMainHand().getType())) return true;
         if (PluginSettings.GLOWING_ITEMS.contains(p.getInventory().getItemInOffHand().getType())) return true;
+
+        double radius = PluginSettings.getDroppedItemsLightRadius();
+        Optional<Item> dropped = p.getNearbyEntities(radius,radius,radius).stream().filter(ent -> ent instanceof Item).map(ent -> (Item) ent).filter(drop -> PluginSettings.GLOWING_ITEMS.contains(drop.getItemStack().getType())).findAny();
+        if (dropped.isPresent()) return true;
 
         return false;
     }
@@ -65,6 +72,7 @@ public class FearIncreaseTimer extends BukkitRunnable
             double finalFear = sp.getFinalFear();
 
             sp.getFearBossbar().setProgress(currentFear/100);
+            sp.getFearBossbar().setTitle(PluginSettings.BossBarSettings.getName().replace("%f", (int)currentFear+""));
 
             if (sp.getFearShowStyle() == FearShowStyle.ACTIONBAR)
             {

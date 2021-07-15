@@ -53,7 +53,7 @@ public class ScaredPlayer
         BarFlag[] flags = new BarFlag[2];
         if (PluginSettings.BossBarSettings.getEnableDarkenSky()) flags[0] = BarFlag.DARKEN_SKY;
         if (PluginSettings.BossBarSettings.getEnableFog()) flags[1] = BarFlag.CREATE_FOG;
-        fearBossbar = Bukkit.createBossBar(PluginSettings.BossBarSettings.getName(), PluginSettings.BossBarSettings.getColor(), BarStyle.SEGMENTED_10, flags);
+        fearBossbar = Bukkit.createBossBar(PluginSettings.BossBarSettings.getName().replace("%f", (int)currentFear+""), PluginSettings.BossBarSettings.getColor(), BarStyle.SEGMENTED_10, flags);
         fearBossbar.setProgress(currentFear/100);
         fearBossbar.addPlayer(bukkitPlayer);
 
