@@ -41,6 +41,7 @@ worlds-blacklist: []
 optifine:
   consider: false
   dropped-glowing-items-light-radius: 4.0
+  burning-mobs-light-radius: 4.0
   items:
     - "TORCH"
     - "SOUL_TORCH"
