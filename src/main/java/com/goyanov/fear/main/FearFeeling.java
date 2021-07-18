@@ -42,9 +42,9 @@ public class FearFeeling extends JavaPlugin
         try
         {
             SQLManager.getMainConnection().setAutoCommit(false);
-            for (ScaredPlayer sp : Fear.SCARED_PLAYERS.values())
+            for (Object sp : Fear.SCARED_PLAYERS.values().toArray())
             {
-                sp.remove();
+                ((ScaredPlayer)sp).remove();
             }
             SQLManager.getMainConnection().commit();
         } catch (SQLException throwables) { throwables.printStackTrace(); }
