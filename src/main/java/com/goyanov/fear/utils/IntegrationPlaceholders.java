@@ -30,10 +30,10 @@ public class IntegrationPlaceholders extends PlaceholderExpansion
         if (p == null) return "";
 
         if (identifier.equals("fear"))
-            return Fear.getScaredPlayer(p) != null ? (int)Fear.getScaredPlayer(p).getCurrentFear() + "" : null;// %fearfeeling_fear%
+            return Fear.getScaredPlayer(p) != null ? (int)Fear.getScaredPlayer(p).getCurrentFear() + "" : "0";// %fearfeeling_fear%
 
         else if (identifier.equals("enabled"))
-            return Fear.getScaredPlayer(p) != null ? !Fear.getScaredPlayer(p).getFearBlocked() + "" : null;// %fearfeeling_enabled%
+            return Fear.getScaredPlayer(p) != null ? !Fear.getScaredPlayer(p).getFearBlocked() + "" : "false";// %fearfeeling_enabled%
 
         return null;
     }
