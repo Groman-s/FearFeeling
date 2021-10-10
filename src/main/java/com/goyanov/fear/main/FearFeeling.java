@@ -11,6 +11,9 @@ import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.sql.SQLException;
 
 public class FearFeeling extends JavaPlugin
@@ -19,6 +22,39 @@ public class FearFeeling extends JavaPlugin
     public static FearFeeling inst()
     {
         return plugin;
+    }
+
+    public void onLoad()
+    {
+        try
+        {
+            Class<?> worldGuardClass = Class.forName("com.sk89q.worldguard.WorldGuard");
+            Method getInstance = worldGuardClass.getDeclaredMethod("getInstance");
+            Object worldGuardInstance = getInstance.invoke(worldGuardClass);
+            Method getFlagRegistry = worldGuardInstance.getClass().getDeclaredMethod("getFlagRegistry");
+            Object registry = getFlagRegistry.invoke(worldGuardInstance);
+
+            Class<?> stateFlagClass = Class.forName("com.sk89q.worldguard.protection.flags.StateFlag");
+            Constructor<?> stateFlagClassConstructor = stateFlagClass.getConstructor(String.class, boolean.class);
+
+            Object fearGrowFlag = stateFlagClassConstructor.newInstance("fear-grow", true);
+            Object fearFallFlag = stateFlagClassConstructor.newInstance("fear-fall", true);
+
+            Method register = registry.getClass().getDeclaredMethod("register", fearGrowFlag.getClass().getSuperclass());
+            try
+            {
+                register.invoke(registry, fearGrowFlag);
+                ConsiderFlags.setFearGrowFlag(fearGrowFlag);
+                register.invoke(registry, fearFallFlag);
+                ConsiderFlags.setFearFallFlag(fearFallFlag);
+            } catch (InvocationTargetException e)
+            {
+                Method get = registry.getClass().getDeclaredMethod("get", String.class);
+                ConsiderFlags.setFearGrowFlag(get.invoke(registry, "fear-grow"));
+                ConsiderFlags.setFearFallFlag(get.invoke(registry, "fear-fall"));
+            }
+        }
+        catch (Exception ignored) { }
     }
 
     public void loadPlugin()
@@ -70,7 +106,14 @@ public class FearFeeling extends JavaPlugin
             new IntegrationPlaceholders().register();
         }
 
+        if (Bukkit.getPluginManager().getPlugin("WorldGuard") != null)
+        {
+            Bukkit.getConsoleSender().sendMessage("§8[§cFearFeeling§8] §bWorldGuard support enabled! Use the fear-fall flag to block the fear falling in a region.");
+            Bukkit.getConsoleSender().sendMessage("§8[§cFearFeeling§8] §bWorldGuard support enabled! Use the fear-grow flag to block the fear growing in a region.");
+        }
+
         PluginManager pm = getServer().getPluginManager();
+        pm.registerEvents(new ConsiderFlags(), this);
         pm.registerEvents(new DeathMessages(), this);
         pm.registerEvents(new FearClearOnRespawn(), this);
         pm.registerEvents(new FearFromMonstersDamage(), this);
