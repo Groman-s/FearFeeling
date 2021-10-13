@@ -140,7 +140,7 @@ public class CommandFear implements CommandExecutor
             }
             else if (param.equals("showstyle"))
             {
-                sp.switchFearStyle((FearShowStyle)value);
+                sp.changeFearStyle((FearShowStyle)value);
                 sender.sendMessage(MessagesManager.Fear.getShowStyleChanged().replace("%s", ((FearShowStyle)value).name()));
             }
             else

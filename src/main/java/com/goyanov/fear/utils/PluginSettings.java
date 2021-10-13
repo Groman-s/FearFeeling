@@ -20,12 +20,17 @@ public class PluginSettings
         private static double fearIncreasePerTick;
         private static double fearDecreasePerTick;
         private static double permissionModifier;
+        private static double fearShowLevel;
         private static FearShowStyle defaultShowStyle;
         private static boolean considerNightVision;
 
         public static byte getLightLevelBorder()
         {
             return lightLevelBorder;
+        }
+        public static double getFearShowLevel()
+        {
+            return fearShowLevel;
         }
         public static FearShowStyle getDefaultShowStyle()
         {
@@ -181,6 +186,7 @@ public class PluginSettings
         FearSettings.fearIncreasePerTick = config.getDouble("fear-settings.fear-increase-per-second")/20;
         FearSettings.fearDecreasePerTick = config.getDouble("fear-settings.fear-decrease-per-second")/20;
         FearSettings.permissionModifier = config.getDouble("fear-settings.permission-modifier");
+        FearSettings.fearShowLevel = config.getDouble("fear-settings.fear-show-level");
         String fearShowStyleName = config.getString("fear-settings.default-show-style").toUpperCase();
         try {
             FearSettings.defaultShowStyle = FearShowStyle.valueOf(fearShowStyleName);

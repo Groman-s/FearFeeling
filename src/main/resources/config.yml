@@ -5,6 +5,7 @@ fear-settings:
   fear-decrease-per-second: 3.0
   permission-modifier: 0.5
   default-show-style: BOSSBAR
+  fear-show-level: 0
   consider-night-vision: true
   critical-level:
     border: 80.0

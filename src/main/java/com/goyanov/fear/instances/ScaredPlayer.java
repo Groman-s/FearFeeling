@@ -4,6 +4,8 @@ import com.goyanov.fear.main.FearFeeling;
 import com.goyanov.fear.timers.FearIncreaseTimer;
 import com.goyanov.fear.timers.HeartBeat;
 import com.goyanov.fear.utils.*;
+import net.md_5.bungee.api.ChatMessageType;
+import net.md_5.bungee.api.chat.ComponentBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.boss.BarFlag;
 import org.bukkit.boss.BarStyle;
@@ -15,17 +17,17 @@ public class ScaredPlayer
 {
     ///============================================================================================================================================
 
-    private Player bukkitPlayer;
+    private final Player bukkitPlayer;
 
-    private boolean fearBlocked = false;
+    private boolean fearBlocked;
     private boolean isLoggedIn = false;
     private boolean diedOfFright = false;
 
-    private double currentFear = 0;
-    private double finalFear = 0;
+    private double currentFear;
+    private double finalFear;
 
-    private BossBar fearBossbar = null;
-    private FearShowStyle fearShowStyle = null;
+    private BossBar fearBossbar;
+    private FearShowStyle fearShowStyle;
 
     private FearIncreaseTimer timer;
 
@@ -57,8 +59,6 @@ public class ScaredPlayer
         fearBossbar.setProgress(currentFear/100);
         fearBossbar.addPlayer(bukkitPlayer);
 
-        if (fearShowStyle != FearShowStyle.BOSSBAR) fearBossbar.setVisible(false);
-
         if (!PluginSettings.getWorldsBlacklist().contains(bukkitPlayer.getWorld()))
         {
             if (fearDisabledByWorldBlackList)
@@ -76,7 +76,7 @@ public class ScaredPlayer
             }
         }
 
-        if (fearBlocked) fearBossbar.setVisible(false);
+        sendFearBar();
 
         timer = new FearIncreaseTimer(this);
         timer.runTaskTimer(FearFeeling.inst(), 1, 1);
@@ -85,6 +85,34 @@ public class ScaredPlayer
     }
 
     ///============================================================================================================================================
+
+    public void sendFearBar()
+    {
+        if (fearBlocked)
+        {
+            fearBossbar.setVisible(false);
+            return;
+        }
+        if (fearShowStyle == FearShowStyle.NONE)
+        {
+            fearBossbar.setVisible(false);
+            return;
+        }
+        if (fearShowStyle == FearShowStyle.BOSSBAR)
+        {
+            fearBossbar.setVisible(currentFear >= PluginSettings.FearSettings.getFearShowLevel());
+            return;
+        }
+        if (fearShowStyle == FearShowStyle.ACTIONBAR)
+        {
+            fearBossbar.setVisible(false);
+            if (currentFear >= PluginSettings.FearSettings.getFearShowLevel())
+                bukkitPlayer.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(PluginSettings.getActionBarMessage().replace("%f", (int)currentFear+"")).create());
+            else
+                bukkitPlayer.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder("").create());
+            return;
+        }
+    }
 
     public void remove()
     {
@@ -152,29 +180,16 @@ public class ScaredPlayer
         clearFear();
 
         fearBlocked = !fearBlocked;
-        if (fearBlocked)
-        {
-            fearBossbar.setVisible(false);
-        }
-        else
-        {
-            if (fearShowStyle == FearShowStyle.BOSSBAR) fearBossbar.setVisible(true);
-        }
+
+        sendFearBar();
 
         return true;
     }
 
-    public void switchFearStyle(FearShowStyle style)
+    public void changeFearStyle(FearShowStyle style)
     {
-        if (fearShowStyle == FearShowStyle.BOSSBAR && style != FearShowStyle.BOSSBAR)
-        {
-            fearBossbar.setVisible(false);
-        }
-        if (style == FearShowStyle.BOSSBAR && !fearBlocked)
-        {
-            fearBossbar.setVisible(true);
-        }
         this.fearShowStyle = style;
+        sendFearBar();
     }
 
     public Player getBukkitPlayer()

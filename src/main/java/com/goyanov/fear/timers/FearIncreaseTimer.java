@@ -2,10 +2,7 @@ package com.goyanov.fear.timers;
 
 import com.goyanov.fear.instances.FearChangeEvent;
 import com.goyanov.fear.instances.ScaredPlayer;
-import com.goyanov.fear.utils.FearShowStyle;
 import com.goyanov.fear.utils.PluginSettings;
-import net.md_5.bungee.api.ChatMessageType;
-import net.md_5.bungee.api.chat.ComponentBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -59,7 +56,7 @@ public class FearIncreaseTimer extends BukkitRunnable
 
             if (!sp.isLoggedIn())
             {
-                if (!PluginSettings.getCheckAuthorized() || !p.getWorld().equals(regLoc.getWorld()) || p.getLocation().distance(regLoc) > 3)
+                if (!PluginSettings.getCheckAuthorized() || !p.getWorld().equals(regLoc.getWorld()) || p.getLocation().distance(regLoc) > 1.5)
                 {
                     sp.setLoggedIn(true);
                 }
@@ -76,11 +73,7 @@ public class FearIncreaseTimer extends BukkitRunnable
             sp.getFearBossbar().setProgress(currentFear/100);
             sp.getFearBossbar().setTitle(PluginSettings.BossBarSettings.getName().replace("%f", (int)currentFear+""));
 
-            if (sp.getFearShowStyle() == FearShowStyle.ACTIONBAR)
-            {
-                // заменить на конфигурабельное сообщение
-                p.spigot().sendMessage(ChatMessageType.ACTION_BAR, new ComponentBuilder(PluginSettings.getActionBarMessage().replace("%f", (int)currentFear+"")).create());
-            }
+            sp.sendFearBar();
 
             if (currentFear >= PluginSettings.FearSettings.CriticalLevel.getBorder() && !effectsGiven)
             {
