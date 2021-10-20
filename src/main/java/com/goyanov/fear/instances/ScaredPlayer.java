@@ -165,12 +165,13 @@ public class ScaredPlayer
 
     public void giveCriticalEffects()
     {
-        bukkitPlayer.addPotionEffects(PluginSettings.FearSettings.CriticalLevel.getEffects());
+        bukkitPlayer.addPotionEffects(PluginSettings.FearSettings.CriticalLevel.getStableEffects());
     }
 
     public void removeCriticalEffects()
     {
-        PluginSettings.FearSettings.CriticalLevel.getEffects().stream().map(PotionEffect::getType).forEach(bukkitPlayer::removePotionEffect);
+        PluginSettings.FearSettings.CriticalLevel.getStableEffects().stream().map(PotionEffect::getType).forEach(bukkitPlayer::removePotionEffect);
+        PluginSettings.FearSettings.CriticalLevel.getRandomEffects().stream().map(PotionEffect::getType).forEach(bukkitPlayer::removePotionEffect);
     }
 
     public boolean toggleFear()

@@ -12,9 +12,11 @@ fear-settings:
     title:
       line-1: "&4CRITICAL FEAR LEVEL!"
       line-2: "FIND A LIGHTED SPACE"
-    effects:
+    stable-effects:
       - "WEAKNESS:1"
       - "SLOW:2"
+    random-effects:
+      - "CONFUSION:1:6"
     play-heartbeat-sounds: true
     health-decrease-per-second-while-full: 10.0
     health-decrease-while-full-border: 0.0

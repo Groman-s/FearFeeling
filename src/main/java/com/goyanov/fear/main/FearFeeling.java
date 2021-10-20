@@ -68,6 +68,8 @@ public class FearFeeling extends JavaPlugin
         MessagesManager.setMessagesConfig(YamlConfiguration.loadConfiguration(messagesConfigFile));
         MessagesManager.reload();
 
+        AutoPluginUpdater.update();
+
         PluginSettings.reload();
 
         Bukkit.getOnlinePlayers().forEach(ScaredPlayer::new);

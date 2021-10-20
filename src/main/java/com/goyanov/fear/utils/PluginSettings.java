@@ -56,7 +56,8 @@ public class PluginSettings
         public static class CriticalLevel
         {
             private static double border;
-            private static List<PotionEffect> effects = new ArrayList<>();
+            private static final List<PotionEffect> stableEffects = new ArrayList<>();
+            private static final List<PotionEffect> randomEffects = new ArrayList<>();
             private static boolean playHeartbeatSounds;
             private static double healthDecreasePerTickWhileFull;
             private static double healthDecreaseWhileFullBorder;
@@ -67,9 +68,13 @@ public class PluginSettings
             {
                 return border;
             }
-            public static List<PotionEffect> getEffects()
+            public static List<PotionEffect> getStableEffects()
             {
-                return effects;
+                return stableEffects;
+            }
+            public static List<PotionEffect> getRandomEffects()
+            {
+                return randomEffects;
             }
             public static boolean getPlayHeartbeatSounds()
             {
@@ -197,12 +202,21 @@ public class PluginSettings
         FearSettings.considerNightVision = config.getBoolean("fear-settings.consider-night-vision");
 
         FearSettings.CriticalLevel.border = config.getDouble("fear-settings.critical-level.border");
-        FearSettings.CriticalLevel.effects.clear();
-        List<String> effectsSettings = config.getStringList("fear-settings.critical-level.effects");
+        FearSettings.CriticalLevel.stableEffects.clear();
+        List<String> effectsSettings = config.getStringList("fear-settings.critical-level.stable-effects");
         for (String line : effectsSettings)
         {
             try {
-                FearSettings.CriticalLevel.effects.add(new PotionEffect(PotionEffectType.getByName(line.split(":")[0]), 1728000, Integer.parseInt(line.split(":")[1])-1));
+                FearSettings.CriticalLevel.stableEffects.add(new PotionEffect(PotionEffectType.getByName(line.split(":")[0]), 1728000, Integer.parseInt(line.split(":")[1])-1));
+            } catch (Exception e) {
+                FearFeeling.inst().getLogger().warning("<<effects>> Error in line " + line + ". Skipping.");
+            }
+        }
+        List<String> randomEffectsSettings = config.getStringList("fear-settings.critical-level.random-effects");
+        for (String line : randomEffectsSettings)
+        {
+            try {
+                FearSettings.CriticalLevel.randomEffects.add(new PotionEffect(PotionEffectType.getByName(line.split(":")[0]), Integer.parseInt(line.split(":")[2])*20, Integer.parseInt(line.split(":")[1])-1));
             } catch (Exception e) {
                 FearFeeling.inst().getLogger().warning("<<effects>> Error in line " + line + ". Skipping.");
             }

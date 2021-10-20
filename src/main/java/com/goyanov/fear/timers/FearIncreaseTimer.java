@@ -7,9 +7,11 @@ import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.*;
+import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.List;
 import java.util.Optional;
 
 public class FearIncreaseTimer extends BukkitRunnable
@@ -75,14 +77,22 @@ public class FearIncreaseTimer extends BukkitRunnable
 
             sp.sendFearBar();
 
-            if (currentFear >= PluginSettings.FearSettings.CriticalLevel.getBorder() && !effectsGiven)
+            if (currentFear >= PluginSettings.FearSettings.CriticalLevel.getBorder())
             {
-                sp.giveCriticalEffects();
-                p.sendTitle(PluginSettings.FearSettings.CriticalLevel.getTitleLine1(), PluginSettings.FearSettings.CriticalLevel.getTitleLine2(), 20,30,20);
-                if (PluginSettings.FearSettings.CriticalLevel.getPlayHeartbeatSounds()) new HeartBeat(p, sp);
-                effectsGiven = true;
+                if (!effectsGiven)
+                {
+                    sp.giveCriticalEffects();
+                    p.sendTitle(PluginSettings.FearSettings.CriticalLevel.getTitleLine1(), PluginSettings.FearSettings.CriticalLevel.getTitleLine2(), 20,30,20);
+                    if (PluginSettings.FearSettings.CriticalLevel.getPlayHeartbeatSounds()) new HeartBeat(p, sp);
+                    effectsGiven = true;
+                }
+                if (Math.random() < 0.02)
+                {
+                    List<PotionEffect> randomEffects = PluginSettings.FearSettings.CriticalLevel.getRandomEffects();
+                    if (randomEffects.size() != 0) p.addPotionEffect(randomEffects.get((int) (Math.random()*randomEffects.size())));
+                }
             }
-            else if (currentFear < PluginSettings.FearSettings.CriticalLevel.getBorder() && effectsGiven)
+            else if (effectsGiven)
             {
                 sp.removeCriticalEffects();
                 effectsGiven = false;
