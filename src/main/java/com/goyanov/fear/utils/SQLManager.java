@@ -70,21 +70,21 @@ public class SQLManager
 
         try
         {
-            Statement statement = mainConnection.createStatement();
-            String query = "SELECT * FROM fears WHERE player = '" + playerName + "'";
-            ResultSet set = statement.executeQuery(query);
+            PreparedStatement statement = mainConnection.prepareStatement("SELECT * FROM fears WHERE player = ?");
+            statement.setString(1, playerName);
+            ResultSet set = statement.executeQuery();
 
-            datas[0] = set.getDouble("current");
-            datas[1] = set.getDouble("final");
-            datas[2] = set.getBoolean("disabled");
-            datas[3] = set.getBoolean("blackworld");
-            datas[4] = FearShowStyle.valueOf(set.getString("showstyle"));
-        } catch (SQLException throwables)
-        {
-            try
+            if (set.next())
             {
-                String query = "INSERT INTO fears(player,current,final,disabled,blackworld,showstyle) VALUES(?,?,?,?,?,?)";
-                PreparedStatement statement = mainConnection.prepareStatement(query);
+                datas[0] = set.getDouble("current");
+                datas[1] = set.getDouble("final");
+                datas[2] = set.getBoolean("disabled");
+                datas[3] = set.getBoolean("blackworld");
+                datas[4] = FearShowStyle.valueOf(set.getString("showstyle"));
+            }
+            else
+            {
+                statement = mainConnection.prepareStatement("INSERT INTO fears(player,current,final,disabled,blackworld,showstyle) VALUES(?,?,?,?,?,?)");
                 statement.setString(1, playerName);
                 statement.setDouble(2, 0.0);
                 statement.setDouble(3, 0.0);
@@ -100,8 +100,9 @@ public class SQLManager
                 datas[2] = disabled;
                 datas[3] = disabled;
                 datas[4] = PluginSettings.FearSettings.getDefaultShowStyle();
-            } catch (SQLException e) { e.printStackTrace(); }
-        }
+            }
+            set.close();
+        } catch (SQLException e) { e.printStackTrace(); }
 
         return datas;
     }
