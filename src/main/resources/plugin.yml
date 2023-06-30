@@ -1,11 +1,12 @@
 name: FearFeeling
 main: com.goyanov.fear.main.FearFeeling
-version: "2.16"
+version: "2.17"
 api-version: 1.13
 author: Groman
 softdepend:
   - PlaceholderAPI
   - WorldGuard
+  - Multiverse-Core
 commands:
   fear:
     description: Main FearFeeling command
